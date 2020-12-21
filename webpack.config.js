@@ -24,7 +24,8 @@ module.exports = {
             options:{
               modules:true,
             }
-          }
+          },
+          "postcss-loader",
         ]
       }
     ],
