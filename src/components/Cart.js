@@ -5,35 +5,37 @@ import {Link, useHistory, Redirect} from "react-router-dom";
 import styles from "./Cart.css";
 import ajax from "../ajax";
 
+const modifyItem = ({itemId, quantity, sugar, ice, tapioca, pudding, grassjelly}) => {
+  return ajax.put("/api/cart/modify-item", {
+    itemId,
+    quantity,
+    sugar,
+    ice,
+    tapioca,
+    pudding,
+    grassjelly,
+  },{
+    headers:{
+      "Content-Type":"application/json",
+      "Authorization":"Bearer "+token
+    }
+  }).then(e=>{
+      setQuery(!query)
+  }).catch(e=>{
+    console.log(e.response || e)
+  })
+}
 
 export const Cart = () => {
   const history = useHistory();
   const token = useSelector(store=>store.token);
   const [items, setItems] = useState([]);
-  const [products, setProducts] = useState();
+  const [products, setProducts] = useState([]);
   const [query, setQuery] = useState(true);
+  const [name, setName] = useState();
+  const [address, setAddress] = useState();
+  const [phone, setPhone] = useState();
 
-  const modifyItem = ({itemId, quantity, sugar, ice, tapioca, pudding, grassjelly}) => {
-    return ajax.put("/api/cart/modify-item", {
-      itemId,
-      quantity,
-      sugar,
-      ice,
-      tapioca,
-      pudding,
-      grassjelly,
-    },{
-      headers:{
-        "Content-Type":"application/json",
-        "Authorization":"Bearer "+token
-      }
-    }).then(e=>{
-        setQuery(!query)
-    }).catch(e=>{
-      console.log(e.response || e)
-    })
-  }
-  
   useEffect(()=>{
     if (token) {
       ajax.get("/api/products")
@@ -44,7 +46,6 @@ export const Cart = () => {
         console.log(e.response || e);
       })
     }
-
   }, [])
 
   useEffect(()=>{
@@ -59,25 +60,20 @@ export const Cart = () => {
     }
   }, [query])
 
-  const total = items.length !== 0 && items.reduce((acc, curr)=>{
-    const {price} = products.filter(item=> item.id === curr.itemCatalogId)[0]
-    return acc + price*curr.quantity
-  }, 0)
-
-  const [name, setName] = useState();
-  const [address, setAddress] = useState();
-  const [phone, setPhone] = useState();
-
-
   if (!token) {
     return <Redirect to="/auth/sign-up"/>
-  } else if (items.length === 0) {
+  } else if (items.length === 0 || products.length === 0) {
     return (
       <div className={styles.EmptyCart}>
         <p className={styles.EmptyCartText}>Your cart is empty!</p>
       </div>
     )
   } else {
+    const total = items.reduce((acc, curr)=>{
+      const {price} = products.filter(item=> item.id === curr.itemCatalogId)[0]
+      return acc + price*curr.quantity
+    }, 0)
+
     return (
       <div className={styles.Cart}>
         {items.map((item, i)=>{
