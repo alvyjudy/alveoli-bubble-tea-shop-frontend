@@ -1,32 +1,36 @@
 import React, {useState} from "react";
 import {Link, useHistory} from "react-router-dom";
-import axios from "axios";
+import {useDispatch} from "react-redux"
 
+import ajax from "../ajax.js";
 import styles from "./Login.css";
+import {setToken} from "../redux/actions";
 
 export const Login = ({originalLink}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const history = useHistory();
+  const dispatch = useDispatch();
 
   return (
     <div className={styles.AuthContainer}>
       <form className={styles.LoginBox}
         onSubmit={e=>{
           e.preventDefault();
-          axios.post("/api/auth/signup", {email, password})
+          ajax.post("/api/auth/login", {email, password})
             .then(e=>{
-              if (e.status === 200) {
                 dispatch(setToken(e.data.token));
                 history.push(originalLink || "/");
-              } else {
-                throw Error;
-              }
             })
             .catch(e=>{
-              console.log(e);
-              setErrorMessage("Error")
+              if (e.response) {
+                console.log(e.response)
+                setErrorMessage("Error")
+              } else {
+                console.log(e)
+                setErrorMessage("Error")
+              }
             })
         }}>
 

@@ -1,18 +1,18 @@
 import React, {useState, useEffect} from "react";
 import {useParams, useHistory, Redirect} from "react-router-dom";
-import axios from "axios";
 import {useSelector, useDispatch} from "react-redux";
 
 import styles from "./ProductDetail.css";
 import {addMinusItem} from "../redux/actions";
 import {SignUp} from "./SignUp";
+import ajax from "../ajax";
 
 export const ProductDetail = () => {
   const {id} = useParams();
   const [product, setProduct] = useState();
 
   useEffect(()=>{
-    return axios.get("/api/products")
+    return ajax.get("/api/products")
       .then(res=>{
         
         const product = res.data.filter(item=>{
@@ -112,7 +112,7 @@ const Purchase = ({name, price, id}) => {
         onClick={e=>{
           e.preventDefault();
           if (token !== undefined) {
-            axios.post("/api/cart/add-item-entry", {
+            ajax.post("/api/cart/add-item-entry", {
               itemCatalogId:id,
               quantity,
               sugar: 100,

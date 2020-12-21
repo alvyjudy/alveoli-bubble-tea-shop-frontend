@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from "react";
-import axios from "axios";
 import {useSelector} from "react-redux";
 import {Redirect} from "react-router-dom";
 
 import styles from "./Orders.css";
+import ajax from "../ajax";
 
 
 export const Orders = () => {
@@ -14,19 +14,23 @@ export const Orders = () => {
 
   useEffect(()=>{
     if (token) {
-      axios.get("/api/orders/get-orders", {
+      ajax.get("/api/orders/get-orders", {
         headers: {"Authorization":"Bearer " + token}
       }).then(res=>{
         setOrders(res.data)
+      }).catch(e=>{
+        console.log(e.response || e);
       })
     }
   }, [query])
 
   useEffect(()=>{
     if (token) {
-      axios.get("/api/products")
+      ajax.get("/api/products")
       .then(res=>{
         setProducts(res.data)
+      }).catch(e=>{
+        console.log(e.response || e);
       })
     }
   }, [])
