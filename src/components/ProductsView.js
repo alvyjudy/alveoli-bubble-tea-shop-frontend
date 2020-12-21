@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from "react";
-import axios from "axios";
 import {Link} from "react-router-dom";
 
 import styles from "./ProductsView.css";
+import ajax from "../ajax";
 
 export const ProductsView = (props) => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    return axios.get("/api/products")
+    return ajax.get("/api/products")
       .then(res=>{
         setProducts(res.data);
       })

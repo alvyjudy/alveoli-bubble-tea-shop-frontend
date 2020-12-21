@@ -1,10 +1,9 @@
 import React, {useState, useEffect} from "react";
-import axios from "axios";
 import {useSelector, useDispatch} from "react-redux";
 import {Link, useHistory, Redirect} from "react-router-dom";
 
 import styles from "./Cart.css";
-
+import ajax from "../ajax";
 
 
 export const Cart = () => {
@@ -15,7 +14,7 @@ export const Cart = () => {
   const [query, setQuery] = useState(true);
 
   const modifyItem = ({itemId, quantity, sugar, ice, tapioca, pudding, grassjelly}) => {
-    return axios.put("/api/cart/modify-item", {
+    return ajax.put("/api/cart/modify-item", {
       itemId,
       quantity,
       sugar,
@@ -29,17 +28,20 @@ export const Cart = () => {
         "Authorization":"Bearer "+token
       }
     }).then(e=>{
-      if (e.status === 200) {
         setQuery(!query)
-      }
-    }).catch(e=>{console.log(e)})
+    }).catch(e=>{
+      console.log(e.response || e)
+    })
   }
   
   useEffect(()=>{
     if (token) {
-      axios.get("/api/products")
+      ajax.get("/api/products")
       .then(res=>{
         setProducts(res.data)
+      })
+      .catch(e=>{
+        console.log(e.response || e);
       })
     }
 
@@ -47,14 +49,12 @@ export const Cart = () => {
 
   useEffect(()=>{
     if (token) {
-      axios.get("/api/cart/get-items", {
+      ajax.get("/api/cart/get-items", {
         headers:{"Authorization":"Bearer "+token}
       }).then(res=>{
-        if (res.status === 200) {
           setItems(res.data) //[{itemId, itemCatalogId, quantity, sugar, ice, tapioca, pudding, grassjelly}, ...] .
-        } else {throw Error}
       }).catch(e=>{
-        console.log(e)
+        console.log(e.response || e)
       })
     }
   }, [query])
@@ -137,17 +137,15 @@ export const Cart = () => {
               <button className={styles.RemoveButton}
                 onClick={e=>{
                   e.preventDefault();
-                  axios.delete("/api/cart/remove-item", {
+                  ajax.delete("/api/cart/remove-item", {
                     headers:{
                       "Content-Type":"application/json",
                       "Authorization":"Bearer "+token
                     },
                     data: {itemId}
                   }).then(e=>{
-                    if (e.status === 200) {
-                      setQuery(!query)
-                    } else {throw Error("error")}
-                  }).catch(e=>{console.log(e)})
+                    setQuery(!query)
+                  }).catch(e=>{console.log(e.response || e)})
                 }}
               >delete</button>
 
@@ -326,7 +324,7 @@ export const Cart = () => {
           <form className={styles.CheckOutBox}
             onSubmit={e=>{
               e.preventDefault();
-              axios.post("/api/orders/place-order", {
+              ajax.post("/api/orders/place-order", {
                 address,
                 phone,
                 name

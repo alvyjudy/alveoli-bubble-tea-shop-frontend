@@ -1,10 +1,10 @@
 import React, {useState} from "react";
 import {Link, useHistory} from "react-router-dom";
-import axios from "axios";
 import {useDispatch} from "react-redux"
 
 import styles from "./SignUp.css";
 import {setToken} from "../redux/actions";
+import ajax from "../ajax";
 
 export const SignUp = ({originalLink}) => {
   const [email, setEmail] = useState("");
@@ -18,17 +18,13 @@ export const SignUp = ({originalLink}) => {
       <form className={styles.SignUpBox}
         onSubmit={e=>{
           e.preventDefault();
-          axios.post("/api/auth/signup", {email, password})
+          ajax.post("/api/auth/signup", {email, password})
             .then(e=>{
-              if (e.status === 200) {
                 dispatch(setToken(e.data.token));
                 history.push(originalLink || "/");
-              } else {
-                throw Error;
-              }
             })
             .catch(e=>{
-              console.log(e);
+              console.log(e.response || e);
               setErrorMessage("Error")
             })
         }}
