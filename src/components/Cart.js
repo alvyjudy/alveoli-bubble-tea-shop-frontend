@@ -5,26 +5,7 @@ import {Link, useHistory, Redirect} from "react-router-dom";
 import styles from "./Cart.css";
 import ajax from "../ajax";
 
-const modifyItem = ({itemId, quantity, sugar, ice, tapioca, pudding, grassjelly}) => {
-  return ajax.put("/api/cart/modify-item", {
-    itemId,
-    quantity,
-    sugar,
-    ice,
-    tapioca,
-    pudding,
-    grassjelly,
-  },{
-    headers:{
-      "Content-Type":"application/json",
-      "Authorization":"Bearer "+token
-    }
-  }).then(e=>{
-      setQuery(!query)
-  }).catch(e=>{
-    console.log(e.response || e)
-  })
-}
+
 
 export const Cart = () => {
   const history = useHistory();
@@ -35,6 +16,27 @@ export const Cart = () => {
   const [name, setName] = useState();
   const [address, setAddress] = useState();
   const [phone, setPhone] = useState();
+
+  const modifyItem = ({itemId, quantity, sugar, ice, tapioca, pudding, grassjelly}) => {
+    return ajax.put("/api/cart/modify-item", {
+      itemId,
+      quantity,
+      sugar,
+      ice,
+      tapioca,
+      pudding,
+      grassjelly,
+    },{
+      headers:{
+        "Content-Type":"application/json",
+        "Authorization":"Bearer "+token
+      }
+    }).then(e=>{
+        setQuery(!query)
+    }).catch(e=>{
+      console.log(e.response || e)
+    })
+  }
 
   useEffect(()=>{
     if (token) {
