@@ -24,13 +24,7 @@ export const Login = ({originalLink}) => {
                 history.push(originalLink || "/");
             })
             .catch(e=>{
-              if (e.response) {
-                console.log(e.response)
-                setErrorMessage("Error")
-              } else {
-                console.log(e)
-                setErrorMessage("Error")
-              }
+              setErrorMessage(e.response.data || "Unspecified error")
             })
         }}>
 

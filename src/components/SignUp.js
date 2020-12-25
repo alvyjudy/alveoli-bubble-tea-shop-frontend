@@ -24,8 +24,7 @@ export const SignUp = ({originalLink}) => {
                 history.push(originalLink || "/");
             })
             .catch(e=>{
-              console.log(e.response || e);
-              setErrorMessage("Error")
+              setErrorMessage(e.response.data || "Unspecified error")
             })
         }}
       >
@@ -58,7 +57,9 @@ export const SignUp = ({originalLink}) => {
           Sign up
         </button>
 
-        <p className={styles.ErrorMessage}>{errorMessage}</p>
+        <p className={styles.ErrorMessage}>{
+          errorMessage
+        }</p>
         <Link 
           data-cy="LogInInsteadOfSignUp"
           to="/auth/login">
