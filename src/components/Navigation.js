@@ -24,11 +24,13 @@ export const Navigation = () => {
         { !token &&
           <Link to="/auth/sign-up"
                 className={styles.SignUpButton}
+                data-cy="SignUpButton"
           >Sign up</Link>
         }
 
         { token && 
           <button className={styles.SignUpButton}
+            data-cy='LogOutButton'
             onClick={e=>{
               e.preventDefault();
               dispatch(rmToken());
@@ -49,15 +51,15 @@ export const Navigation = () => {
           alt="Home"/>
         </Link>
 
-        <Link to="/products" className={styles.button}>
+        <Link to="/products" className={styles.button} data-cy='Products'>
           <span className={styles.ButtonText}>Products</span>
         </Link>
 
-        <Link to="/cart" className={styles.button}>
+        <Link to="/cart" className={styles.button} data-cy="Cart">
           <span className={styles.ButtonText}>Cart</span>
         </Link>
 
-        <Link to="/orders" className={styles.button}>
+        <Link to="/orders" className={styles.button} data-cy="Orders">
           <span className={styles.ButtonText}>Orders</span>
         </Link>
 

@@ -37,6 +37,7 @@ export const Login = ({originalLink}) => {
         <p className={styles.LoginTitle}>Login to your account</p>
 
         <input className={styles.InputEmail}
+          data-cy="Email address"
           required
           type="email"
           placeholder="Email address"
@@ -48,6 +49,7 @@ export const Login = ({originalLink}) => {
         />
 
         <input className={styles.InputPassword}
+          data-cy="Password"
           required
           type="password"
           placeholder="Password"
@@ -58,7 +60,9 @@ export const Login = ({originalLink}) => {
           value={password}
         />
 
-        <button type="submit" className={styles.LoginButton}>
+        <button type="submit" 
+          data-cy="SubmitLogin"
+          className={styles.LoginButton}>
           Login
         </button>
 

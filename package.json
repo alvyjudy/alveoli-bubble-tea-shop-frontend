@@ -19,6 +19,7 @@
     "axios": "^0.21.0",
     "babel-loader": "^8.2.2",
     "css-loader": "^5.0.1",
+    "cypress": "^6.1.0",
     "postcss": "^8.2.1",
     "postcss-loader": "^4.1.0",
     "postcss-preset-env": "^6.7.0",

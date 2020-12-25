@@ -19,7 +19,9 @@ export const ProductsView = (props) => {
     <div className={styles.ProductsView}>
       {products.map(item=>{
           return (
-            <div key={item.id} className={styles.ProductThumbnail}>
+            <div data-cy="ProductThumbnail"
+              key={item.id} 
+              className={styles.ProductThumbnail}>
               <Link to={"/product/" + item.id} className={styles.Link}>
                 <img src={"/assets/" + item.thumbnail} alt={item.thumbnail} 
                   className={styles.Img}/>
