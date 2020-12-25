@@ -10,7 +10,7 @@ import {
 const token = localStorage.getItem("alvybbt") || undefined;
 
 
-  const reducer = (state={
+const reducer = (state={
     token,
     cartItems:[],
   }, action) => {
