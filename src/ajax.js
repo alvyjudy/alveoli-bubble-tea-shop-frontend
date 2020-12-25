@@ -5,7 +5,7 @@ const ajax = () => {
     validateStatus: status => status === 200
   })
 
-  if (process.env.NODE_ENV === 'local') {
+  if (process.env.NODE_ENV === 'development') {
     instance.interceptors.request.use((config)=>{
       console.log("Request config:", config)
       return config
