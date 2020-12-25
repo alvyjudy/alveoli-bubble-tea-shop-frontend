@@ -340,6 +340,7 @@ export const Cart = () => {
           >
 
             <input className={styles.OrderName} 
+              data-cy="OrderName"
               required
               placeholder="Name"
               onChange={e=>{
@@ -349,6 +350,7 @@ export const Cart = () => {
             />
 
             <input className={styles.OrderAddress}
+              data-cy="Address"
               required
               placeholder="Address"
               onChange={e=>{
@@ -357,6 +359,7 @@ export const Cart = () => {
             }}/>
 
             <input className={styles.OrderPhone}
+              data-cy="Phone"
               required
               type="text"
               placeholder="Phone number"
@@ -369,6 +372,7 @@ export const Cart = () => {
             <p className={styles.Hst}>HST(13%) {Math.round(total * 0.13 * 100)/100}$</p>
             <p className={styles.Subtotal}>Subtotal: {Math.round(total * 1.13*100)/100}$</p>
             <button className={styles.CheckOutButton}
+              data-cy="CheckOutButton"
             >Place your order</button>
           </form>
           

@@ -109,6 +109,7 @@ const Purchase = ({name, price, id}) => {
       </div>
 
       <button className={styles.AddToCart}
+        data-cy="AddToCartButton"
         onClick={e=>{
           e.preventDefault();
           if (token !== undefined) {

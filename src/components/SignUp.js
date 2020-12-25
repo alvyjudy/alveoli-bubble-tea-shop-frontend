@@ -32,6 +32,7 @@ export const SignUp = ({originalLink}) => {
         <p className={styles.SignUpTitle}>Sign up with us</p>
         <input className={styles.InputEmail}
           required
+          data-cy="Email address"
           type="email"
           placeholder="Email address"
           onChange={e=>{
@@ -42,6 +43,7 @@ export const SignUp = ({originalLink}) => {
 
         <input className={styles.InputPassword}
           required
+          data-cy="Password"
           type="password"
           placeholder="Password"
           onChange={e=>{
@@ -50,12 +52,18 @@ export const SignUp = ({originalLink}) => {
           value={password}
         />
 
-        <button type="submit" className={styles.SignUpButton}>
+        <button type="submit" 
+          data-cy="SubmitSignup"
+        className={styles.SignUpButton}>
           Sign up
         </button>
 
         <p className={styles.ErrorMessage}>{errorMessage}</p>
-        <Link to="/auth/login">Have an account? Login instead</Link>
+        <Link 
+          data-cy="LogInInsteadOfSignUp"
+          to="/auth/login">
+          Have an account? Login instead
+        </Link>
       </form>
     </div>
   )
