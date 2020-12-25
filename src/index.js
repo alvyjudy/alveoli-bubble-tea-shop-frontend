@@ -31,10 +31,10 @@ const App = () => {
   const dispatch = useDispatch();
   const token = useSelector(store=>store.token);
   if (token) {
-    console.log("token found in localstorage")
-    ajax.post("/api/auth/validate-token",
+    ajax.post("/api/auth/validate-token",{},
       {headers:{Authorization:"Bearer "+token}}
     ).catch(e=>{
+      console.log("Token invalid");
       dispatch(rmToken(token));
     })
   }
